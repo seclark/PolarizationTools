@@ -15,7 +15,9 @@ import cPickle as pickle
 from matplotlib import rc
 from astropy.io import fits
 
-@np.vectorize
+vectorize = np.vectorize
+
+@vectorize
 def angle_residual(ang1, ang2, degrees = True):
     """
     Determines circular difference between two angles.
@@ -34,4 +36,22 @@ def angle_residual(ang1, ang2, degrees = True):
         dang = np.degrees(dang)
     
     return dang
+
+@vectorize
+def sigma_psi_P(Q, U, sig_QQ, sig_UU):
+    """
+    Output:: sigma_psi: error on polarization angle [degrees]
+             sigma_P: error on polarized intensity
+    """
+    
+    Psquared = Q**2 + U**2
+    P = np.sqrt(Psquared)
+    sig_P = np.sqrt((1/Psquared)*(Q**2*sig_QQ**2 + U**2*sig_UU**2))
+    
+    sig_psi = 28.65*np.sqrt((Q**2*sig_UU**2 + U**2*sig_QQ**2)/(Q**2*sig_QQ**2 + U**2*sig_UU**2))*(sig_P/P)
+    
+    return sig_psi, sig_P
+    
+    
+    
     
