@@ -40,8 +40,8 @@ def angle_residual(ang1, ang2, degrees = True):
 @vectorize
 def sigma_psi_P(Q, U, sig_QQ, sig_UU):
     """
-    Output:: sigma_psi: error on polarization angle [degrees]
-             sigma_P: error on polarized intensity
+    Output:: sigma_psi: uncertainty on polarization angle [degrees]
+             sigma_P: uncertainty on polarized intensity
     """
     
     Psquared = Q**2 + U**2
@@ -51,7 +51,21 @@ def sigma_psi_P(Q, U, sig_QQ, sig_UU):
     sig_psi = 28.65*np.sqrt((Q**2*sig_UU**2 + U**2*sig_QQ**2)/(Q**2*sig_QQ**2 + U**2*sig_UU**2))*(sig_P/P)
     
     return sig_psi, sig_P
+
+@vectorize
+def polarization_angle(Q, U, negU = True):
+    """
+    Returns polarization angle in radians.
+    If negU is True, multiplies U by -1. Useful for converting from IAU <-> Planck standard.
+    NB: returns polarization angle, *not* B-field angle.
+    """
     
+    if negU is True:
+        pol_ang = np.mod(0.5*np.arctan2(-U, Q), np.pi)
+    else:
+        pol_ang = np.mod(0.5*np.arctan2(U, Q), np.pi)
+    
+    return pol_ang
     
     
     
