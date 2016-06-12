@@ -38,7 +38,7 @@ def angle_residual(ang1, ang2, degrees = True):
     return dang
 
 @vectorize
-def sigma_psi_P(Q, U, sig_QQ, sig_UU):
+def sigma_psi_P(Q, U, sig_QQ, sig_UU, degrees = True):
     """
     Output:: sigma_psi: uncertainty on polarization angle [degrees]
              sigma_P: uncertainty on polarized intensity
@@ -49,6 +49,9 @@ def sigma_psi_P(Q, U, sig_QQ, sig_UU):
     sig_P = np.sqrt((1/Psquared)*(Q**2*sig_QQ**2 + U**2*sig_UU**2))
     
     sig_psi = 28.65*np.sqrt((Q**2*sig_UU**2 + U**2*sig_QQ**2)/(Q**2*sig_QQ**2 + U**2*sig_UU**2))*(sig_P/P)
+    
+    if degrees is False:
+        sig_psi = np.radians(sig_psi)
     
     return sig_psi, sig_P
 
