@@ -5,7 +5,6 @@ import matplotlib
 matplotlib.rcParams['backend'] = "Qt4Agg"
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
-import pyfits
 import pylab
 import time
 import copy
