@@ -55,7 +55,7 @@ def sigma_psi_P(Q, U, sig_QQ, sig_UU, degrees = True):
     return sig_psi, sig_P
 
 @vectorize
-def polarization_angle(Q, U, negU = True):
+def polarization_angle(Q, U, negU = False):
     """
     Returns polarization angle in radians.
     If negU is True, multiplies U by -1. Useful for converting from IAU <-> Planck standard.
