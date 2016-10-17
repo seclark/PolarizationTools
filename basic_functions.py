@@ -69,5 +69,16 @@ def polarization_angle(Q, U, negU = False):
     
     return pol_ang
     
+@vectorize
+def mod_halfpolar_center_0(angle):
+    """
+    Returns angle (in radians) on a domain from -pi/2 to +pi/2. 
+    """
     
+    angle = np.mod(angle, np.pi)
+    
+    if angle > np.pi/2:
+        angle = angle - np.pi
+        
+    return angle
     
